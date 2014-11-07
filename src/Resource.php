@@ -132,20 +132,18 @@ class Resource implements ClientAwareInterface
         }
 
         $embeddedValue = $this->embedded[$name];
-        if (!$embeddedValue instanceof Resource) {
-            if (is_string($embeddedValue)) {
-                $this->embedded[$name] = $embeddedValue;
-            } elseif (is_int(key($embeddedValue)) || empty($embeddedValue)) {
+        if (!$embeddedValue instanceof Resource && is_array($embeddedValue)) {
+            if (is_int(key($embeddedValue)) || empty($embeddedValue)) {
                 $embeddedValue = new ResourceCollection($embeddedValue);
-                $embeddedValue->setClient($this->client);
-
-                $this->embedded[$name] = $embeddedValue;
             } else {
                 $embeddedValue = self::create($embeddedValue);
-                $embeddedValue->setClient($this->client);
-
-                $this->embedded[$name] = $embeddedValue;
             }
+
+            if ($embeddedValue instanceof ClientAwareInterface) {
+                $embeddedValue->setClient($this->client);
+            }
+
+            $this->embedded[$name] = $embeddedValue;
         }
 
         return $this->embedded[$name];
