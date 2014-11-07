@@ -118,10 +118,6 @@ class ResourcePaginator implements \Iterator, \Countable, \ArrayAccess
      */
     public function current()
     {
-        if ($this->isMissingResources()) {
-            $this->loadMissingResources();
-        }
-
         return $this->items[$this->index];
     }
 
@@ -146,6 +142,10 @@ class ResourcePaginator implements \Iterator, \Countable, \ArrayAccess
      */
     public function valid()
     {
+        if ($this->isMissingResources()) {
+            $this->loadMissingResources();
+        }
+
         return isset($this->items[$this->index]);
     }
 

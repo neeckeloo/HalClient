@@ -10,7 +10,7 @@ use Zend\Http\Response as HttpResponse;
 
 class ClientTest extends PHPUnit_Framework_TestCase
 {
-    public function testGetPaginatedResources()
+    protected function getPaginatedResources($pages = 3)
     {
         $client = new Client();
 
@@ -19,7 +19,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $client->setHttpClient($httpClient);
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < $pages; $i++) {
             $filePath = realpath(__DIR__ . '/assets/pagination/page' . ($i + 1) . '.json');
             $json = file_get_contents($filePath);
 
@@ -32,9 +32,33 @@ class ClientTest extends PHPUnit_Framework_TestCase
                 ->will($this->returnValue($response));
         }
 
-        $resourcePaginator = $client->get('/posts');
+        return $client->get('/posts');
+    }
+
+    public function testGetCountOfPaginatedResources()
+    {
+        $resourcePaginator = $this->getPaginatedResources(1);
 
         $this->assertInstanceOf(ResourcePaginator::class, $resourcePaginator);
+        $this->assertCount(15, $resourcePaginator);
+    }
+
+    public function testIterateThroughPaginatedResources()
+    {
+        $resourcePaginator = $this->getPaginatedResources();
+
+        $i = 1;
+        foreach ($resourcePaginator as $resource) {
+            $this->assertInstanceOf(Resource::class, $resource);
+            $this->assertEquals($i, $resource->get('id'));
+            $this->assertEquals('Post ' . $i, $resource->get('title'));
+            $i++;
+        }
+    }
+
+    public function testGetPaginatedResourcesUsingKeys()
+    {
+        $resourcePaginator = $this->getPaginatedResources();
 
         for ($i = 0; $i < count($resourcePaginator); $i++) {
             $resource = $resourcePaginator[$i];
@@ -44,13 +68,14 @@ class ClientTest extends PHPUnit_Framework_TestCase
             $this->assertEquals($id, $resource->get('id'));
             $this->assertEquals('Post ' . $id, $resource->get('title'));
         }
+    }
 
-        $i = 1;
-        foreach ($resourcePaginator as $resource) {
-            $this->assertInstanceOf(Resource::class, $resource);
-            $this->assertEquals($i, $resource->get('id'));
-            $this->assertEquals('Post ' . $i, $resource->get('title'));
-            $i++;
+    public function testPaginatedResourcesExistUsingKeys()
+    {
+        $resourcePaginator = $this->getPaginatedResources();
+
+        for ($i = 0; $i < count($resourcePaginator); $i++) {
+            $this->assertTrue(isset($resourcePaginator[$i]));
         }
     }
 
