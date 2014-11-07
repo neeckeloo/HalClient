@@ -61,6 +61,10 @@ class Client
             throw new Exception\RuntimeException('Invalid JSON Format');
         }
 
+        if (isset($data['title'], $data['status'], $data['detail'])) {
+            throw new Exception\RuntimeException($data['detail'], $data['status']);
+        }
+
         return Resource::create($this, $data);
     }
 

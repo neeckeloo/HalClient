@@ -117,4 +117,30 @@ class ClientTest extends PHPUnit_Framework_TestCase
             $i++;
         }
     }
+
+    /**
+     * @expectedException \HalClient\Exception\RuntimeException
+     */
+    public function testGetApiProblem()
+    {
+        $client = new Client();
+
+        $httpClient = $this->getMockBuilder('Zend\Http\Client')
+            ->setMethods(['send'])
+            ->getMock();
+        $client->setHttpClient($httpClient);
+
+        $filePath = realpath(__DIR__ . '/assets/api-problem.json');
+        $json = file_get_contents($filePath);
+
+        $response = new HttpResponse();
+        $response->setContent($json);
+
+        $httpClient
+            ->expects($this->once())
+            ->method('send')
+            ->will($this->returnValue($response));
+
+        $resource = $client->get('/posts/1');
+    }
 }
