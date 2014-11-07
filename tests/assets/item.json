@@ -1,0 +1,36 @@
+{
+    "id": 1,
+    "title": "Post 1",
+    "_embedded": {
+        "comments": [{
+                "id": 1,
+                "body": "Comment 1",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/1/comments/1"
+                    }
+                }
+            }, {
+                "id": 2,
+                "body": "Comment 2",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/1/comments/2"
+                    }
+                }
+            }, {
+                "id": 3,
+                "body": "Comment 3",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/1/comments/3"
+                    }
+                }
+            }]
+    },
+    "_links": {
+        "self": {
+            "href": "http://localhost/posts/1"
+        }
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "_links": {
+        "self": {
+            "href": "http://localhost/posts?page=2"
+        },
+        "first": {
+            "href": "http://localhost/posts"
+        },
+        "last": {
+            "href": "http://localhost/posts?page=3"
+        },
+        "prev": {
+            "href": "http://localhost/posts?page=1"
+        },
+        "next": {
+            "href": "http://localhost/posts?page=3"
+        }
+    },
+    "_embedded": {
+        "posts": [{
+                "id": 6,
+                "title": "Post 6",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/6"
+                    }
+                }
+            }, {
+                "id": 7,
+                "title": "Post 7",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/7"
+                    }
+                }
+            }, {
+                "id": 8,
+                "title": "Post 8",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/8"
+                    }
+                }
+            }, {
+                "id": 9,
+                "title": "Post 9",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/9"
+                    }
+                }
+            }, {
+                "id": 10,
+                "title": "Post 10",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost/posts/10"
+                    }
+                }
+            }]
+    },
+    "page_count": 3,
+    "page_size": 5,
+    "total_items": 15
+}
