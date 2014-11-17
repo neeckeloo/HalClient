@@ -2,9 +2,6 @@
 namespace HalClientTest;
 
 use HalClient\Client;
-use HalClient\Resource;
-use HalClient\ResourceCollection;
-use HalClient\ResourcePaginator;
 use PHPUnit_Framework_TestCase;
 use Zend\Http\Response as HttpResponse;
 
@@ -39,7 +36,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $resourcePaginator = $this->getPaginatedResources(1);
 
-        $this->assertInstanceOf(ResourcePaginator::class, $resourcePaginator);
+        $this->assertInstanceOf('HalClient\ResourcePaginator', $resourcePaginator);
         $this->assertCount(15, $resourcePaginator);
     }
 
@@ -49,7 +46,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         $i = 1;
         foreach ($resourcePaginator as $resource) {
-            $this->assertInstanceOf(Resource::class, $resource);
+            $this->assertInstanceOf('HalClient\Resource', $resource);
             $this->assertEquals($i, $resource->get('id'));
             $this->assertEquals('Post ' . $i, $resource->get('title'));
             $i++;
@@ -62,7 +59,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         for ($i = 0; $i < count($resourcePaginator); $i++) {
             $resource = $resourcePaginator[$i];
-            $this->assertInstanceOf(Resource::class, $resource);
+            $this->assertInstanceOf('HalClient\Resource', $resource);
 
             $id = $i + 1;
             $this->assertEquals($id, $resource->get('id'));
@@ -101,17 +98,17 @@ class ClientTest extends PHPUnit_Framework_TestCase
 
         $resource = $client->get('/posts/1');
 
-        $this->assertInstanceOf(Resource::class, $resource);
+        $this->assertInstanceOf('HalClient\Resource', $resource);
         $this->assertEquals(1, $resource->get('id'));
         $this->assertEquals('Post 1', $resource->get('title'));
 
         $comments = $resource->get('comments');
-        $this->assertInstanceOf(ResourceCollection::class, $comments);
+        $this->assertInstanceOf('HalClient\ResourceCollection', $comments);
         $this->assertCount(3, $comments);
 
         $i = 1;
         foreach ($comments as $comment) {
-            $this->assertInstanceOf(Resource::class, $comment);
+            $this->assertInstanceOf('HalClient\Resource', $comment);
             $this->assertEquals($i, $comment->get('id'));
             $this->assertEquals('Comment ' . $i, $comment->get('body'));
             $i++;
