@@ -1,13 +1,16 @@
 {
     "name": "neeckeloo/hal-client",
     "description": "HAL client",
+    "type": "library",
+    "keywords": [
+        "hal", "api", "client"
+    ],
+    "license": "MIT",
     "homepage": "https://github.com/neeckeloo/HalClient",
-    "license": "proprietary",
     "authors": [
         {
             "name": "Nicolas Eeckeloo",
-            "email": "neeckeloo@gmail.com",
-            "role": "Developer"
+            "email": "neeckeloo@gmail.com"
         }
     ],
     "require": {
@@ -16,7 +19,8 @@
         "zendframework/zend-uri": "~2.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "~4.3",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
