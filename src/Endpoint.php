@@ -22,12 +22,4 @@ class Endpoint
         $this->client->setBaseUrl($url);
         return $this;
     }
-
-    /**
-     * @return Resource
-     */
-    public function countries()
-    {
-        return $this->client->get('/countries');
-    }
 }
